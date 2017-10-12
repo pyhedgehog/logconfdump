@@ -4,6 +4,8 @@ logconfdump
 
 Python module useful to dump current configuration of logging module to file.
 
+**Status:** *Pre-alpha* - working, but pending reorganization.
+
 Motivation
 ==========
 
@@ -98,4 +100,12 @@ Later you can use it like this::
 
  import logging.config
  logging.config.fileConfig('example1.ini')
+
+Plans
+=====
+
+* Convert from spaghetti code. Implement exporters for standard handlers/formatters.
+* Implement ``dump_dict()``.
+* Implement internal and pluggable protocol for exporting non-standard handlers/formatters.
+* Write CLI converters (``pylog_conf2yaml`` and alike).
 
