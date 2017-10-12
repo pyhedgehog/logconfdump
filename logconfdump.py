@@ -1,7 +1,7 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import os
 import sys
-import logging
+import logging.handlers
 import six
 from six.moves.configparser import RawConfigParser
 
@@ -13,7 +13,7 @@ class LiteralExpr:
 
 def dump_config(f=None):
     fclose = lambda:None
-    if isinstance(type(f), six.string_types):
+    if isinstance(f, six.string_types):
         f = open(f, 'w')
         fclose = f.close
     if f is None:
@@ -39,7 +39,7 @@ def dump_config(f=None):
                             fmtinfo['style'] = k
                         break
             formatters[id(formatter)] = fmtinfo
-            fmtinfo['sectname'] = 'fmt%d'%(len(formatters),)
+            fmtinfo['sectname'] = 'form%d'%(len(formatters),)
             return fmtinfo
         def process_stream(stream):
             if stream is None:
@@ -93,7 +93,7 @@ def dump_config(f=None):
             if issubclass(klass, logging.handlers.MemoryHandler) and handler.target:
                 hndlinfo['target'] = process_handler(handler.target)
             handlers[id(handler)] = hndlinfo
-            hndlinfo['sectname'] = handler._name or 'hdnl%d'%(len(handlers),)
+            hndlinfo['sectname'] = handler._name or 'hand%d'%(len(handlers),)
             return hndlinfo
         def process_logger(logger):
             if isinstance(logger, logging.PlaceHolder):
@@ -156,7 +156,7 @@ def dump_config(f=None):
             conf.add_section(sectname)
             for k,v in fmtinfo.items():
                 conf.set(sectname, k, v)
-        if 0:#sys.version_info[0:2] >= (3, 4):
+        if sys.version_info[0:2] >= (3, 4):
             conf.write(f, False)
         else:
             conf.write(f)
